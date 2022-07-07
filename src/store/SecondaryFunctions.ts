@@ -1,22 +1,4 @@
-import {View} from './rootReducer'
-
-type Action = {
-    type: string,
-    date: string,
-    purchases: Array<Purchase>,
-    views: any,
-}
-
-
-type Click = {
-    date: string,
-    click: number
-}
-
-type Purchase = {
-    date: string,
-    value: number
-}
+import {View, Click, Purchase, Action} from './rootReducer'
 
 export const addViewsAndClicks = (action: Action) => {
     const viewsAndClicks = action.views;

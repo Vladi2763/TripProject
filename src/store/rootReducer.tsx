@@ -6,7 +6,6 @@ import {
     addPurchasesForDiagram
 } from "./SecondaryFunctions"
 
-
 const initialState: InitialState = {
     purchases: [],
     actualPurchases: [],
@@ -38,7 +37,7 @@ export type View = {
 }
 
 
-type Click = {
+export type Click = {
     date: string,
     click: number
 }
@@ -58,7 +57,7 @@ type ClicksForDiagram = {
     pastClick: ClickForDiagram
 }
 
-type Action = {
+export type Action = {
     type: string,
     date: string,
     purchases: Array<Purchase>,
@@ -104,7 +103,7 @@ const rootReducer = (state = initialState, action: Action) => {
                 views: [...viewsAndClicks.views],
                 clicks: [...viewsAndClicks.clicks],
             }
-            
+
         }
         case 'GETACTUALVIEWS': {
 

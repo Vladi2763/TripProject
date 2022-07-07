@@ -26,14 +26,68 @@ const getViewsAction = (views: View) => {
     }
 }
 
+const getActualPurchases = () => {
+    return {
+        type: 'GETACTUALPURCHASES'
+    }
+}
+
+const getPastPurchases = () => {
+    return {
+        type: 'GETPASTPURCHASES'
+    }
+}
+
+export const addPurchasesDiagram = () => {
+    return {
+        type: 'ADDPURCHASESBAR'
+    }
+}
+
+const getActualViews = () => {
+    return {
+        type: 'GETACTUALVIEWS'
+    }
+}
+
+const getPastViews = () => {
+    return {
+        type: 'GETPASTVIEWS'
+    }
+}
+
+export const addViewsDiagram = () => {
+    return {
+        type: 'ADDVIEWSBAR'
+    }
+}
+
+const getActualClicks = () => {
+    return {
+        type: 'GETACTUALCLICKS'
+    }
+}
+
+const getPastClicks = () => {
+    return {
+        type: 'GETPASTCLICKS'
+    }
+}
+
+export const addClicksDiagram = () => {
+    return {
+        type: 'ADDCLICKSBAR'
+    }
+}
+
 export const getPurchasesAsyns: () => any = () => {
     return (dispatch: ({ }: PurchaseDispatch) => void) => {
         getPurchases()
             .then(purchases => {
                 dispatch(getPurchasesAction(purchases))
-                dispatch({ type: 'GETACTUALPURCHASES' })
-                dispatch({ type: 'GETPASTPURCHASES' })
-                dispatch({ type: 'ADDPURCHASESBAR' })
+                dispatch(getActualPurchases())
+                dispatch(getPastPurchases())
+                dispatch(addPurchasesDiagram())
             })
     }
 }
@@ -43,12 +97,12 @@ export const getViewsAsyns: () => any = () => {
         getViews()
             .then(views => {
                 dispatch(getViewsAction(views))
-                dispatch({ type: 'GETACTUALVIEWS' })
-                dispatch({ type: 'GETPASTVIEWS' })
-                dispatch({ type: 'ADDVIEWSBAR' })
-                dispatch({ type: 'GETACTUALCLICKS' })
-                dispatch({ type: 'GETPASTCLICKS' })
-                dispatch({ type: 'ADDCLICKSBAR' })
+                dispatch(getActualViews())
+                dispatch(getPastViews())
+                dispatch(addViewsDiagram())
+                dispatch(getActualClicks())
+                dispatch(getPastClicks())
+                dispatch(addClicksDiagram())
             })
     }
 }
