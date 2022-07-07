@@ -4,12 +4,12 @@ import { Purchase, View } from '../store/rootReducer'
 
 type PurchaseDispatch = {
     type: string,
-    purchases: Purchase
+    purchases?: Purchase
 }
 
 type ViewDispatch = {
     type: string,
-    views: View
+    views?: View
 }
 
 const getPurchasesAction = (purchases: Purchase) => {
@@ -21,7 +21,7 @@ const getPurchasesAction = (purchases: Purchase) => {
 
 const getViewsAction = (views: View) => {
     return {
-        type: 'GETVIEWS',
+        type: 'GETVIEWSANDCLICKS',
         views: views
     }
 }
@@ -31,6 +31,9 @@ export const getPurchasesAsyns: () => any = () => {
         getPurchases()
             .then(purchases => {
                 dispatch(getPurchasesAction(purchases))
+                dispatch({ type: 'GETACTUALPURCHASES' })
+                dispatch({ type: 'GETPASTPURCHASES' })
+                dispatch({ type: 'ADDPURCHASESBAR' })
             })
     }
 }
@@ -40,6 +43,12 @@ export const getViewsAsyns: () => any = () => {
         getViews()
             .then(views => {
                 dispatch(getViewsAction(views))
+                dispatch({ type: 'GETACTUALVIEWS' })
+                dispatch({ type: 'GETPASTVIEWS' })
+                dispatch({ type: 'ADDVIEWSBAR' })
+                dispatch({ type: 'GETACTUALCLICKS' })
+                dispatch({ type: 'GETPASTCLICKS' })
+                dispatch({ type: 'ADDCLICKSBAR' })
             })
     }
 }

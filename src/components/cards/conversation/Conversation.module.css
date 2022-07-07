@@ -1,0 +1,56 @@
+.wrapper {
+    /* width: 512px; */
+    height: 279px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.text {
+    color: #000000;
+    font-size: 12px;
+    line-height: 32px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.viewsConversation {
+    color: #000000;
+    font-size: 34px;
+    line-height: 42px;
+    letter-spacing: 0, 25px;
+}
+
+.viewsText {
+    font-size: 12px;
+    line-height: 20px;
+    color: #000000;
+    letter-spacing: 0.4px;
+}
+
+.viewsPastText {
+    font-size: 12px;
+    line-height: 20px;
+    color: #757575;
+    letter-spacing: 0.4px;
+}
+
+.spanContainer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    line-height: 20px;
+    color: #757575;
+    letter-spacing: 0.4px;
+}
+
+@media(max-width: 490px) {
+    .spanContainer {
+        font-size: 8px;
+    }
+}

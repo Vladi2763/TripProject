@@ -1,18 +1,29 @@
-export type InitState = {
-    purchases: Array<Purchase>,
-    actualPurchases: Array<Purchase>,
-    views: Array<View>,
-    firstDate: string,
-    secondDate: string,
-    thirdDate: string,
-    fourthDate: string
-}
+import {
+    addViewsAndClicks, addFilteredViews, addViewsForDiagram,
+    addFilteredClicks,
+    addClicksForDiagram,
+    addFilteredPurchases,
+    addPurchasesForDiagram
+} from "./SecondaryFunctions"
 
-type Action = {
-    type: string,
-    date: string,
-    purchases: Array<Purchase>,
-    views: Array<View>
+
+const initialState: InitialState = {
+    purchases: [],
+    actualPurchases: [],
+    pastPurchases: [],
+    purchasesForDiagram: [],
+    firstDate: '2021-07-01',
+    secondDate: '2021-07-27',
+    thirdDate: '2020-07-01',
+    fourthDate: '2020-07-27',
+    actualViews: [],
+    pastViews: [],
+    views: [],
+    clicks: [],
+    viewsForDiagram: [],
+    actualClicks: [],
+    pastClicks: [],
+    clicksForDiagram: []
 }
 
 export type Purchase = {
@@ -20,23 +31,59 @@ export type Purchase = {
     value: number
 }
 
+
 export type View = {
     date: string,
-    view: number,
+    view: number
+}
+
+
+type Click = {
+    date: string,
     click: number
 }
 
-const initialState: InitState = {
-    purchases: [],
-    actualPurchases: [],
-    views: [],
-    firstDate: '',
-    secondDate: '',
-    thirdDate: '',
-    fourthDate: ''
-
+type ClickForDiagram = {
+    date: string | number,
+    value: number
 }
 
+type purchasesForDiagram = {
+    pastPurchase: Purchase,
+    purchase: Purchase
+}
+
+type ClicksForDiagram = {
+    click: ClickForDiagram,
+    pastClick: ClickForDiagram
+}
+
+type Action = {
+    type: string,
+    date: string,
+    purchases: Array<Purchase>,
+    views: any
+}
+
+
+export type InitialState = {
+    purchases: Array<Purchase>,
+    actualPurchases: Array<Purchase>,
+    pastPurchases: Array<Purchase>,
+    purchasesForDiagram: Array<purchasesForDiagram>,
+    firstDate: string,
+    secondDate: string,
+    thirdDate: string,
+    fourthDate: string,
+    actualViews: Array<View>,
+    pastViews: Array<View>,
+    views: Array<View>,
+    viewsForDiagram: any,
+    clicks: Array<Click>,
+    actualClicks: Array<Click>,
+    pastClicks: Array<Click>,
+    clicksForDiagram: Array<ClicksForDiagram>
+}
 
 const rootReducer = (state = initialState, action: Action) => {
 
@@ -48,59 +95,132 @@ const rootReducer = (state = initialState, action: Action) => {
                 purchases: [...action.purchases]
             }
         }
-        case 'GETVIEWS': {
+        case 'GETVIEWSANDCLICKS': {
+
+            const viewsAndClicks = addViewsAndClicks(action)
 
             return {
                 ...state,
-                views: [...action.views]
+                views: [...viewsAndClicks.views],
+                clicks: [...viewsAndClicks.clicks],
+            }
+            
+        }
+        case 'GETACTUALVIEWS': {
+
+            const actualViews = addFilteredViews(state.firstDate, state.secondDate, state.views)
+
+            return {
+                ...state,
+                actualViews: [...actualViews]
+            }
+        }
+
+        case 'GETPASTVIEWS': {
+
+            const pastViews = addFilteredViews(state.thirdDate, state.fourthDate, state.views)
+
+            return {
+                ...state,
+                pastViews: [...pastViews]
+            }
+        }
+
+        case 'ADDVIEWSBAR': {
+
+            const viewsForDiagram = addViewsForDiagram(state.actualViews, state.pastViews)
+            console.log(viewsForDiagram)
+            return {
+                ...state,
+                viewsForDiagram: [...viewsForDiagram]
+            }
+        }
+
+        case 'GETACTUALCLICKS': {
+
+            const actualClicks = addFilteredClicks(state.firstDate, state.secondDate, state.clicks)
+
+            return {
+                ...state,
+                actualClicks: [...actualClicks]
+            }
+        }
+        case 'GETPASTCLICKS': {
+
+            const pastClicks = addFilteredClicks(state.thirdDate, state.fourthDate, state.clicks)
+
+            return {
+                ...state,
+                pastClicks: [...pastClicks]
+            }
+        }
+
+        case 'ADDCLICKSBAR': {
+
+            const clicksForDiagram = addClicksForDiagram(state.actualClicks, state.pastClicks)
+
+            return {
+                ...state,
+                clicksForDiagram: [...clicksForDiagram]
             }
         }
         case 'GETACTUALPURCHASES': {
 
-            const actualPurchases = state.purchases.filter((purchase) => {
+            const actualPurchases = addFilteredPurchases(state.firstDate, state.secondDate, state.purchases)
 
-            })
             return {
                 ...state,
-
+                actualPurchases: [...actualPurchases]
             }
         }
-        case 'ADDFIRSTDATE':
+        case 'GETPASTPURCHASES': {
 
-        const date = new Date(action.date).toISOString()
+            const pastPurchases = addFilteredPurchases(state.thirdDate, state.fourthDate, state.purchases)
 
             return {
                 ...state,
-                firstDate: date
+                pastPurchases: [...pastPurchases]
+            }
+        }
+
+        case 'ADDPURCHASESBAR': {
+
+            const purchasesForDiagram = addPurchasesForDiagram(state.actualPurchases, state.pastPurchases)
+
+            return {
+                ...state,
+                purchasesForDiagram: [...purchasesForDiagram]
+            }
+        }
+
+        case 'ADDFIRSTDATE':
+
+            return {
+                ...state,
+                firstDate: action.date
             }
 
         case 'ADDSECONDDATE': {
 
-            const date = new Date(action.date).toISOString()
-
             return {
                 ...state,
-                secondDate: date
+                secondDate: action.date
             }
         }
 
         case 'ADDTHIRDDATE': {
 
-            const date = new Date(action.date).toISOString()
-
             return {
                 ...state,
-                thirdDate: date
+                thirdDate: action.date
             }
         }
 
         case 'ADDFOURTHDATE': {
 
-            const date = new Date(action.date).toISOString()
-
             return {
                 ...state,
-                fourthDate: date
+                fourthDate: action.date
             }
         }
 

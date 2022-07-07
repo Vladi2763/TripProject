@@ -1,0 +1,26 @@
+.main {
+    display: flex;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 38px;
+    justify-content: center;
+    max-width: 1120px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.cardContainer {
+    width: 48%;
+}
+
+@media(max-width: 949px) {
+    .cardContainer {
+        width:99%;
+    }
+}
+
+
